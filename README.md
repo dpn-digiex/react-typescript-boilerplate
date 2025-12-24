@@ -1,99 +1,40 @@
-# Frontend - OAuth2 & OpenID Connect Application
+# React TypeScript Boilerplate
 
-Frontend application được xây dựng bằng React với TypeScript, hỗ trợ authentication thông qua OAuth2 và OpenID Connect.
+Boilerplate template để khởi tạo nhanh một dự án React với TypeScript, bao gồm các cấu hình cơ bản và best practices sẵn có.
 
-## 📋 Mô tả
+## 🎯 Mục tiêu
 
-Ứng dụng frontend được xây dựng để demo các flow xác thực OAuth2 và OpenID Connect, bao gồm:
+Template này được tạo ra để giúp bạn bắt đầu một dự án React + TypeScript một cách nhanh chóng với:
 
-- Đăng nhập/Đăng ký với email và password
-- Xác thực qua các provider bên thứ ba (Google, Facebook)
-- Quản lý phiên đăng nhập với refresh token
-- Route protection dựa trên role
+- Cấu hình sẵn các công cụ cần thiết (Vite, ESLint, Prettier)
+- Cấu trúc thư mục rõ ràng và dễ mở rộng
+- Path aliases để import code dễ dàng
+- Routing với React Router
+- State management với Zustand
+- HTTP client với Axios
+- Toast notifications
 
 ## 🛠️ Tech Stack
 
-- **React 19.2.0** với TypeScript
-- **React Router DOM v7** - Routing và navigation
+- **React 19.2.0** - UI library
+- **TypeScript** - Type safety
 - **Vite 6** - Build tool và dev server
-- **Axios** - HTTP client
+- **React Router DOM v7** - Routing
 - **Zustand 5** - State management
+- **Axios** - HTTP client
 - **React Toastify** - Toast notifications
 
-## 📁 Cấu trúc thư mục
-
-```
-src/
-├── apis/              # Axios client configuration
-├── assets/            # Static assets (images, fonts)
-├── components/        # Reusable components
-│   └── toast-notify/ # Toast notification wrapper
-├── constants/         # Application constants (routes, roles, API endpoints)
-├── contexts/          # React contexts (AuthProvider)
-├── hooks/             # Custom React hooks
-│   ├── useAuth.ts
-│   ├── useAxiosPrivate.ts
-│   └── useRefreshToken.ts
-├── interfaces/        # TypeScript interfaces
-├── pages/             # Page components
-│   ├── account/       # Account management page (protected)
-│   ├── login/         # Login page
-│   ├── register/      # Registration page
-│   ├── forgot-password/
-│   ├── error.tsx
-│   ├── home.tsx
-│   ├── page-not-found.tsx
-│   └── unauthorized.tsx
-├── router/            # Routing configuration
-│   ├── AppRouter.tsx  # Main router configuration
-│   ├── AppLayout.tsx  # Public layout
-│   ├── PrivateLayout.tsx # Protected layout
-│   └── RoleBasedRoute.tsx # Role-based route protection
-├── stores/            # Zustand stores
-├── utils/             # Utility functions
-└── main.tsx           # Application entry point
-```
-
-## 🎨 Layouts
-
-### AppLayout (Public Layout)
-
-Layout chính cho các trang public:
-
-- **Header**: Component header (hiện tại đang empty)
-- **Footer**: Component footer (hiện tại đang empty)
-- **Outlet**: Render child routes
-
-**Routes sử dụng layout này:**
-
-- `/` - Trang chủ (mặc định hiển thị LoginPage)
-- `/login` - Trang đăng nhập
-- `/register` - Trang đăng ký
-- `/forgot-password` - Trang quên mật khẩu
-- `/unauthorized` - Trang không có quyền truy cập
-
-### PrivateLayout (Protected Layout)
-
-Layout cho các trang yêu cầu authentication:
-
-- Chỉ accessible khi user đã đăng nhập
-- Bảo vệ bởi `RoleBasedRoute` component
-- Hiện tại render `<Outlet />` trực tiếp (có thể thêm sidebar, header riêng sau)
-
-**Routes sử dụng layout này:**
-
-- `/account` - Trang quản lý tài khoản (yêu cầu role: ADMIN)
-
-## 🚀 Cách chạy dự án
+## 🚀 Cách bắt đầu
 
 ### Yêu cầu
 
 - Node.js >= 18 (khuyến nghị >= 20)
 - Yarn hoặc npm
 
-### Cài đặt dependencies
+### Cài đặt
 
 ```bash
+# Cài đặt dependencies
 yarn install
 # hoặc
 npm install
@@ -107,7 +48,7 @@ yarn dev
 npm run dev
 ```
 
-Ứng dụng sẽ chạy tại `http://localhost:5173` (hoặc port khác nếu 5173 đã được sử dụng).
+Ứng dụng sẽ chạy tại `http://localhost:5173`
 
 ### Build cho production
 
@@ -125,43 +66,42 @@ yarn preview
 npm run preview
 ```
 
-### Linting
+## 📁 Cấu trúc thư mục
 
-```bash
-# Kiểm tra lỗi
-yarn lint
-
-# Tự động fix lỗi
-yarn lint:fix
 ```
-
-### Format code
-
-```bash
-yarn format
+src/
+├── apis/              # Axios client configuration
+├── assets/            # Static assets (images, fonts)
+├── components/        # Reusable components
+├── constants/         # Application constants
+├── contexts/          # React contexts
+├── hooks/             # Custom React hooks
+├── interfaces/        # TypeScript interfaces
+├── pages/             # Page components
+├── router/            # Routing configuration
+├── stores/            # Zustand stores
+├── utils/             # Utility functions
+└── main.tsx           # Application entry point
 ```
 
 ## ⚙️ Cấu hình
 
 ### Environment Variables
 
-Tạo file `.env` trong thư mục `frontend/` với các biến sau:
+Tạo file `.env` trong thư mục root:
 
 ```env
 VITE_API_URL=http://localhost:5000
 ```
 
-- `VITE_API_URL`: URL của backend API (mặc định: `http://localhost:5000`)
-
 ### Path Aliases
 
-Dự án sử dụng path aliases để import code dễ dàng hơn:
+Dự án sử dụng path aliases để import code dễ dàng:
 
 ```typescript
 import { ROUTES_APP } from "@constants";
 import { AuthProvider } from "@contexts/AuthProvider";
 import useAuth from "@hooks/useAuth";
-// ... và nhiều alias khác
 ```
 
 Các alias được cấu hình trong `vite.config.ts`:
@@ -178,41 +118,11 @@ Các alias được cấu hình trong `vite.config.ts`:
 - `@stores` → `./src/stores`
 - `@utils` → `./src/utils`
 
-## 🔐 Authentication
-
-Ứng dụng sử dụng:
-
-- **Access Token**: Được lưu trong memory (state)
-- **Refresh Token**: Được lưu trong HTTP-only cookie (managed bởi backend)
-- **Auto refresh**: Token tự động được refresh khi hết hạn thông qua `useRefreshToken` hook
-
-### Các hooks liên quan
-
-- `useAuth`: Quản lý authentication state và actions
-- `useAxiosPrivate`: Axios instance với interceptors để tự động thêm token và refresh khi cần
-- `useRefreshToken`: Hook để refresh access token
-
-## 📝 Chú ý
-
-1. **Backend API**: Đảm bảo backend đang chạy tại `VITE_API_URL` trước khi chạy frontend
-2. **CORS**: Backend phải được cấu hình CORS để cho phép frontend gọi API
-3. **Cookies**: Refresh token được lưu trong HTTP-only cookie, cần đảm bảo backend set cookie với đúng domain
-4. **Roles**:
-   - ADMIN: 202
-   - EDITOR: 203
-   - USER: 204
-   - ACCESS_ALL: 205
-5. **Protected Routes**: Các route trong `PrivateLayout` yêu cầu user đã đăng nhập và có role phù hợp
-
-## 🔄 Scripts có sẵn
+## 🔄 Scripts
 
 - `yarn dev` - Chạy development server
-- `yarn build` - Build cho production (compile TypeScript + build với Vite)
+- `yarn build` - Build cho production
 - `yarn preview` - Preview production build
 - `yarn lint` - Kiểm tra linting errors
 - `yarn lint:fix` - Tự động fix linting errors
 - `yarn format` - Format code với Prettier
-
-## 📚 Tài liệu thêm
-
-Xem README.md ở root của project để biết thêm về OAuth2 và OpenID Connect flows được implement.
